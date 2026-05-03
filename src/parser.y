@@ -5,21 +5,13 @@
 #include<../src/tree.h>
 #include<../src/strtab.h>
 
+#define NODE_TYPES_DEFINED
+
 extern int yylineno;
 extern int yylex(void);
 
 int yywarning(char *msg);
 void yyerror(const char *msg);
-
-enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
-                FORMALDECLLIST, FORMALDECL, FUNBODY, LOCALDECLLIST,
-                STATEMENTLIST, STATEMENT, COMPOUNDSTMT, ASSIGNSTMT,
-                CONDSTMT, LOOPSTMT, RETURNSTMT, EXPRESSION, RELOP,
-                ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
-                ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR_NODE,
-                FUNCTYPENAME};
-
-enum opType {OP_ADD, OP_SUB, OP_MUL, OP_DIV, OP_LT, OP_LTE, OP_EQ, OP_GTE, OP_GT, OP_NEQ};
 
 symEntry *ST_lookup_current(char *id);
 char *scope = "";
