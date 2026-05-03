@@ -4,6 +4,15 @@ Terminals unused in grammar
     ILLEGAL_TOK
 
 
+State 34 conflicts: 9 shift/reduce, 1 reduce/reduce
+State 47 conflicts: 9 shift/reduce, 1 reduce/reduce
+State 70 conflicts: 9 shift/reduce, 1 reduce/reduce
+State 105 conflicts: 9 shift/reduce
+State 106 conflicts: 9 shift/reduce
+State 117 conflicts: 9 shift/reduce
+State 121 conflicts: 9 shift/reduce
+
+
 Grammar
 
     0 $accept: program $end
@@ -50,201 +59,214 @@ Grammar
    27     | loopStmt
    28     | returnStmt
    29     | exprStmt
+   30     | forStmt
+   31     | ε
 
-   30 compoundStmt: LCRLY_BRKT localDeclList stmtList RCRLY_BRKT
+   32 compoundStmt: LCRLY_BRKT localDeclList stmtList RCRLY_BRKT
 
-   31 assignStmt: var OPER_ASGN expr SEMICLN
+   33 assignStmt: var OPER_ASGN expr SEMICLN
 
-   32 condStmt: KWD_IF LPAREN expr RPAREN stmt
-   33         | KWD_IF LPAREN expr RPAREN stmt KWD_ELSE stmt
+   34 condStmt: KWD_IF LPAREN expr RPAREN stmt
+   35         | KWD_IF LPAREN expr RPAREN stmt KWD_ELSE stmt
 
-   34 loopStmt: KWD_WHILE LPAREN expr RPAREN stmt
+   36 loopStmt: KWD_WHILE LPAREN expr RPAREN stmt
 
-   35 returnStmt: KWD_RETURN SEMICLN
-   36           | KWD_RETURN expr SEMICLN
+   37 returnStmt: KWD_RETURN SEMICLN
+   38           | KWD_RETURN expr SEMICLN
 
-   37 exprStmt: expr SEMICLN
+   39 exprStmt: expr SEMICLN
 
-   38 var: ID
-   39    | ID LSQ_BRKT addExpr RSQ_BRKT
+   40 assignNoSemi: var OPER_ASGN expr
 
-   40 $@3: ε
+   41 forStmt: KWD_FOR LPAREN assignStmt expr SEMICLN assignNoSemi RPAREN stmt
 
-   41 $@4: ε
+   42 var: ID
+   43    | ID LSQ_BRKT addExpr RSQ_BRKT
 
-   42 funcCallExpr: ID LPAREN $@3 argList $@4 RPAREN
+   44 $@3: ε
 
-   43 argList: ε
-   44        | expr
-   45        | argList COMMA expr
+   45 $@4: ε
 
-   46 expr: addExpr
-   47     | addExpr relop addExpr
+   46 funcCallExpr: ID LPAREN $@3 argList $@4 RPAREN
 
-   48 relop: OPER_LT
-   49      | OPER_LTE
-   50      | OPER_GT
-   51      | OPER_GTE
-   52      | OPER_EQ
-   53      | OPER_NEQ
+   47 argList: ε
+   48        | expr
+   49        | argList COMMA expr
 
-   54 addExpr: term
-   55        | addExpr addop term
+   50 expr: addExpr
+   51     | addExpr relop addExpr
 
-   56 addop: OPER_ADD
-   57      | OPER_SUB
+   52 relop: OPER_LT
+   53      | OPER_LTE
+   54      | OPER_GT
+   55      | OPER_GTE
+   56      | OPER_EQ
+   57      | OPER_NEQ
 
-   58 term: factor
-   59     | term mulop factor
+   58 addExpr: term
+   59        | addExpr addop term
 
-   60 mulop: OPER_MUL
-   61      | OPER_DIV
+   60 addop: OPER_ADD
+   61      | OPER_SUB
 
-   62 factor: LPAREN expr RPAREN
-   63       | var
-   64       | funcCallExpr
-   65       | INTCONST
-   66       | CHARCONST
+   62 term: factor
+   63     | term mulop factor
+
+   64 mulop: OPER_MUL
+   65      | OPER_DIV
+
+   66 factor: LPAREN expr RPAREN
+   67       | var
+   68       | funcCallExpr
+   69       | INTCONST
+   70       | CHARCONST
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    ID <strval> (258) 7 8 13 17 18 38 39 42
-    INTCONST <value> (259) 8 65
-    CHARCONST <value> (260) 66
+    ID <strval> (258) 7 8 13 17 18 42 43 46
+    INTCONST <value> (259) 8 69
+    CHARCONST <value> (260) 70
     KWD_INT (261) 9
     KWD_CHAR (262) 10
     KWD_VOID (263) 11
-    KWD_IF (264) 32 33
-    KWD_ELSE (265) 33
-    KWD_WHILE (266) 34
-    KWD_RETURN (267) 35 36
-    LPAREN (268) 13 32 33 34 42 62
-    RPAREN (269) 13 32 33 34 42 62
-    LCRLY_BRKT (270) 19 30
-    RCRLY_BRKT (271) 19 30
-    LSQ_BRKT (272) 8 18 39
-    RSQ_BRKT (273) 8 18 39
-    SEMICLN (274) 7 8 31 35 36 37
-    COMMA (275) 16 45
-    OPER_ASGN (276) 31
-    OPER_ADD (277) 56
-    OPER_SUB (278) 57
-    OPER_MUL (279) 60
-    OPER_DIV (280) 61
-    OPER_LT (281) 48
-    OPER_LTE (282) 49
-    OPER_GT (283) 50
-    OPER_GTE (284) 51
-    OPER_EQ (285) 52
-    OPER_NEQ (286) 53
-    ERROR (287)
-    ILLEGAL_TOK (288)
-    LOWER_THAN_ELSE (289)
+    KWD_IF (264) 34 35
+    KWD_ELSE (265) 35
+    KWD_WHILE (266) 36
+    KWD_RETURN (267) 37 38
+    KWD_FOR (268) 41
+    LPAREN (269) 13 34 35 36 41 46 66
+    RPAREN (270) 13 34 35 36 41 46 66
+    LCRLY_BRKT (271) 19 32
+    RCRLY_BRKT (272) 19 32
+    LSQ_BRKT (273) 8 18 43
+    RSQ_BRKT (274) 8 18 43
+    SEMICLN (275) 7 8 33 37 38 39 41
+    COMMA (276) 16 49
+    OPER_ASGN (277) 33 40
+    OPER_ADD (278) 60
+    OPER_SUB (279) 61
+    OPER_MUL (280) 64
+    OPER_DIV (281) 65
+    OPER_LT (282) 52
+    OPER_LTE (283) 53
+    OPER_GT (284) 54
+    OPER_GTE (285) 55
+    OPER_EQ (286) 56
+    OPER_NEQ (287) 57
+    ERROR (288)
+    ILLEGAL_TOK (289)
+    LOWER_THAN_ELSE (290)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (35)
+    $accept (36)
         on left: 0
-    program <node> (36)
+    program <node> (37)
         on left: 2
         on right: 0
-    $@1 (37)
+    $@1 (38)
         on left: 1
         on right: 2
-    declList <node> (38)
+    declList <node> (39)
         on left: 3 4
         on right: 2 4
-    decl <node> (39)
+    decl <node> (40)
         on left: 5 6
         on right: 3 4
-    varDecl <node> (40)
+    varDecl <node> (41)
         on left: 7 8
         on right: 5 21
-    typeSpec <node> (41)
+    typeSpec <node> (42)
         on left: 9 10 11
         on right: 7 8 13 17 18
-    funDecl <node> (42)
+    funDecl <node> (43)
         on left: 13
         on right: 6
-    $@2 (43)
+    $@2 (44)
         on left: 12
         on right: 13
-    formalDeclList <node> (44)
+    formalDeclList <node> (45)
         on left: 14 15 16
         on right: 13 16
-    formalDecl <node> (45)
+    formalDecl <node> (46)
         on left: 17 18
         on right: 15 16
-    funBody <node> (46)
+    funBody <node> (47)
         on left: 19
         on right: 13
-    localDeclList <node> (47)
+    localDeclList <node> (48)
         on left: 20 21
-        on right: 19 21 30
-    stmtList <node> (48)
+        on right: 19 21 32
+    stmtList <node> (49)
         on left: 22 23
-        on right: 19 23 30
-    stmt <node> (49)
-        on left: 24 25 26 27 28 29
-        on right: 23 32 33 34
-    compoundStmt <node> (50)
-        on left: 30
+        on right: 19 23 32
+    stmt <node> (50)
+        on left: 24 25 26 27 28 29 30 31
+        on right: 23 34 35 36 41
+    compoundStmt <node> (51)
+        on left: 32
         on right: 24
-    assignStmt <node> (51)
-        on left: 31
-        on right: 25
-    condStmt <node> (52)
-        on left: 32 33
+    assignStmt <node> (52)
+        on left: 33
+        on right: 25 41
+    condStmt <node> (53)
+        on left: 34 35
         on right: 26
-    loopStmt <node> (53)
-        on left: 34
+    loopStmt <node> (54)
+        on left: 36
         on right: 27
-    returnStmt <node> (54)
-        on left: 35 36
+    returnStmt <node> (55)
+        on left: 37 38
         on right: 28
-    exprStmt <node> (55)
-        on left: 37
+    exprStmt <node> (56)
+        on left: 39
         on right: 29
-    var <node> (56)
-        on left: 38 39
-        on right: 31 63
-    funcCallExpr <node> (57)
-        on left: 42
-        on right: 64
-    $@3 (58)
+    assignNoSemi <node> (57)
         on left: 40
-        on right: 42
-    $@4 (59)
+        on right: 41
+    forStmt <node> (58)
         on left: 41
-        on right: 42
-    argList <node> (60)
-        on left: 43 44 45
-        on right: 42 45
-    expr <node> (61)
-        on left: 46 47
-        on right: 31 32 33 34 36 37 44 45 62
-    relop <node> (62)
-        on left: 48 49 50 51 52 53
-        on right: 47
-    addExpr <node> (63)
-        on left: 54 55
-        on right: 39 46 47 55
-    addop <node> (64)
-        on left: 56 57
-        on right: 55
-    term <node> (65)
+        on right: 30
+    var <node> (59)
+        on left: 42 43
+        on right: 33 40 67
+    funcCallExpr <node> (60)
+        on left: 46
+        on right: 68
+    $@3 (61)
+        on left: 44
+        on right: 46
+    $@4 (62)
+        on left: 45
+        on right: 46
+    argList <node> (63)
+        on left: 47 48 49
+        on right: 46 49
+    expr <node> (64)
+        on left: 50 51
+        on right: 33 34 35 36 38 39 40 41 48 49 66
+    relop <node> (65)
+        on left: 52 53 54 55 56 57
+        on right: 51
+    addExpr <node> (66)
         on left: 58 59
-        on right: 54 55 59
-    mulop <node> (66)
+        on right: 43 50 51 59
+    addop <node> (67)
         on left: 60 61
         on right: 59
-    factor <node> (67)
-        on left: 62 63 64 65 66
-        on right: 58 59
+    term <node> (68)
+        on left: 62 63
+        on right: 58 59 63
+    mulop <node> (69)
+        on left: 64 65
+        on right: 63
+    factor <node> (70)
+        on left: 66 67 68 69 70
+        on right: 62 63
 
 
 State 0
@@ -567,25 +589,38 @@ State 34
     KWD_IF      shift, and go to state 40
     KWD_WHILE   shift, and go to state 41
     KWD_RETURN  shift, and go to state 42
-    LPAREN      shift, and go to state 43
-    LCRLY_BRKT  shift, and go to state 44
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
 
-    $default  reduce using rule 22 (stmtList)
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    RCRLY_BRKT  reduce using rule 22 (stmtList)
+    RCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 22 (stmtList)
 
-    stmtList      go to state 45
-    stmt          go to state 46
-    compoundStmt  go to state 47
-    assignStmt    go to state 48
-    condStmt      go to state 49
-    loopStmt      go to state 50
-    returnStmt    go to state 51
-    exprStmt      go to state 52
-    var           go to state 53
-    funcCallExpr  go to state 54
-    expr          go to state 55
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    stmtList      go to state 46
+    stmt          go to state 47
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
 State 35
@@ -606,84 +641,91 @@ State 36
 
 State 37
 
-   38 var: ID •
-   39    | ID • LSQ_BRKT addExpr RSQ_BRKT
-   42 funcCallExpr: ID • LPAREN $@3 argList $@4 RPAREN
+   42 var: ID •
+   43    | ID • LSQ_BRKT addExpr RSQ_BRKT
+   46 funcCallExpr: ID • LPAREN $@3 argList $@4 RPAREN
 
-    LPAREN    shift, and go to state 59
-    LSQ_BRKT  shift, and go to state 60
+    LPAREN    shift, and go to state 61
+    LSQ_BRKT  shift, and go to state 62
 
-    $default  reduce using rule 38 (var)
+    $default  reduce using rule 42 (var)
 
 
 State 38
 
-   65 factor: INTCONST •
+   69 factor: INTCONST •
 
-    $default  reduce using rule 65 (factor)
+    $default  reduce using rule 69 (factor)
 
 
 State 39
 
-   66 factor: CHARCONST •
+   70 factor: CHARCONST •
 
-    $default  reduce using rule 66 (factor)
+    $default  reduce using rule 70 (factor)
 
 
 State 40
 
-   32 condStmt: KWD_IF • LPAREN expr RPAREN stmt
-   33         | KWD_IF • LPAREN expr RPAREN stmt KWD_ELSE stmt
+   34 condStmt: KWD_IF • LPAREN expr RPAREN stmt
+   35         | KWD_IF • LPAREN expr RPAREN stmt KWD_ELSE stmt
 
-    LPAREN  shift, and go to state 61
+    LPAREN  shift, and go to state 63
 
 
 State 41
 
-   34 loopStmt: KWD_WHILE • LPAREN expr RPAREN stmt
+   36 loopStmt: KWD_WHILE • LPAREN expr RPAREN stmt
 
-    LPAREN  shift, and go to state 62
+    LPAREN  shift, and go to state 64
 
 
 State 42
 
-   35 returnStmt: KWD_RETURN • SEMICLN
-   36           | KWD_RETURN • expr SEMICLN
+   37 returnStmt: KWD_RETURN • SEMICLN
+   38           | KWD_RETURN • expr SEMICLN
 
     ID         shift, and go to state 37
     INTCONST   shift, and go to state 38
     CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
-    SEMICLN    shift, and go to state 63
+    LPAREN     shift, and go to state 44
+    SEMICLN    shift, and go to state 65
 
-    var           go to state 64
-    funcCallExpr  go to state 54
-    expr          go to state 65
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 67
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
 State 43
 
-   62 factor: LPAREN • expr RPAREN
+   41 forStmt: KWD_FOR • LPAREN assignStmt expr SEMICLN assignNoSemi RPAREN stmt
 
-    ID         shift, and go to state 37
-    INTCONST   shift, and go to state 38
-    CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
-
-    var           go to state 64
-    funcCallExpr  go to state 54
-    expr          go to state 66
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    LPAREN  shift, and go to state 68
 
 
 State 44
 
-   30 compoundStmt: LCRLY_BRKT • localDeclList stmtList RCRLY_BRKT
+   66 factor: LPAREN • expr RPAREN
+
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 69
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 45
+
+   32 compoundStmt: LCRLY_BRKT • localDeclList stmtList RCRLY_BRKT
 
     KWD_INT   shift, and go to state 4
     KWD_CHAR  shift, and go to state 5
@@ -693,17 +735,17 @@ State 44
 
     varDecl        go to state 32
     typeSpec       go to state 33
-    localDeclList  go to state 67
-
-
-State 45
-
-   19 funBody: LCRLY_BRKT localDeclList stmtList • RCRLY_BRKT
-
-    RCRLY_BRKT  shift, and go to state 68
+    localDeclList  go to state 70
 
 
 State 46
+
+   19 funBody: LCRLY_BRKT localDeclList stmtList • RCRLY_BRKT
+
+    RCRLY_BRKT  shift, and go to state 71
+
+
+State 47
 
    23 stmtList: stmt • stmtList
 
@@ -713,225 +755,255 @@ State 46
     KWD_IF      shift, and go to state 40
     KWD_WHILE   shift, and go to state 41
     KWD_RETURN  shift, and go to state 42
-    LPAREN      shift, and go to state 43
-    LCRLY_BRKT  shift, and go to state 44
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
 
-    $default  reduce using rule 22 (stmtList)
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    RCRLY_BRKT  reduce using rule 22 (stmtList)
+    RCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 22 (stmtList)
 
-    stmtList      go to state 69
-    stmt          go to state 46
-    compoundStmt  go to state 47
-    assignStmt    go to state 48
-    condStmt      go to state 49
-    loopStmt      go to state 50
-    returnStmt    go to state 51
-    exprStmt      go to state 52
-    var           go to state 53
-    funcCallExpr  go to state 54
-    expr          go to state 55
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    stmtList      go to state 72
+    stmt          go to state 47
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
-State 47
+State 48
 
    24 stmt: compoundStmt •
 
     $default  reduce using rule 24 (stmt)
 
 
-State 48
+State 49
 
    25 stmt: assignStmt •
 
     $default  reduce using rule 25 (stmt)
 
 
-State 49
+State 50
 
    26 stmt: condStmt •
 
     $default  reduce using rule 26 (stmt)
 
 
-State 50
+State 51
 
    27 stmt: loopStmt •
 
     $default  reduce using rule 27 (stmt)
 
 
-State 51
+State 52
 
    28 stmt: returnStmt •
 
     $default  reduce using rule 28 (stmt)
 
 
-State 52
+State 53
 
    29 stmt: exprStmt •
 
     $default  reduce using rule 29 (stmt)
 
 
-State 53
-
-   31 assignStmt: var • OPER_ASGN expr SEMICLN
-   63 factor: var •
-
-    OPER_ASGN  shift, and go to state 70
-
-    $default  reduce using rule 63 (factor)
-
-
 State 54
 
-   64 factor: funcCallExpr •
+   30 stmt: forStmt •
 
-    $default  reduce using rule 64 (factor)
+    $default  reduce using rule 30 (stmt)
 
 
 State 55
 
-   37 exprStmt: expr • SEMICLN
+   33 assignStmt: var • OPER_ASGN expr SEMICLN
+   67 factor: var •
 
-    SEMICLN  shift, and go to state 71
+    OPER_ASGN  shift, and go to state 73
+
+    $default  reduce using rule 67 (factor)
 
 
 State 56
 
-   46 expr: addExpr •
-   47     | addExpr • relop addExpr
-   55 addExpr: addExpr • addop term
+   68 factor: funcCallExpr •
 
-    OPER_ADD  shift, and go to state 72
-    OPER_SUB  shift, and go to state 73
-    OPER_LT   shift, and go to state 74
-    OPER_LTE  shift, and go to state 75
-    OPER_GT   shift, and go to state 76
-    OPER_GTE  shift, and go to state 77
-    OPER_EQ   shift, and go to state 78
-    OPER_NEQ  shift, and go to state 79
-
-    $default  reduce using rule 46 (expr)
-
-    relop  go to state 80
-    addop  go to state 81
+    $default  reduce using rule 68 (factor)
 
 
 State 57
 
-   54 addExpr: term •
-   59 term: term • mulop factor
+   39 exprStmt: expr • SEMICLN
 
-    OPER_MUL  shift, and go to state 82
-    OPER_DIV  shift, and go to state 83
-
-    $default  reduce using rule 54 (addExpr)
-
-    mulop  go to state 84
+    SEMICLN  shift, and go to state 74
 
 
 State 58
 
-   58 term: factor •
+   50 expr: addExpr •
+   51     | addExpr • relop addExpr
+   59 addExpr: addExpr • addop term
 
-    $default  reduce using rule 58 (term)
+    OPER_ADD  shift, and go to state 75
+    OPER_SUB  shift, and go to state 76
+    OPER_LT   shift, and go to state 77
+    OPER_LTE  shift, and go to state 78
+    OPER_GT   shift, and go to state 79
+    OPER_GTE  shift, and go to state 80
+    OPER_EQ   shift, and go to state 81
+    OPER_NEQ  shift, and go to state 82
+
+    $default  reduce using rule 50 (expr)
+
+    relop  go to state 83
+    addop  go to state 84
 
 
 State 59
 
-   42 funcCallExpr: ID LPAREN • $@3 argList $@4 RPAREN
+   58 addExpr: term •
+   63 term: term • mulop factor
 
-    $default  reduce using rule 40 ($@3)
+    OPER_MUL  shift, and go to state 85
+    OPER_DIV  shift, and go to state 86
 
-    $@3  go to state 85
+    $default  reduce using rule 58 (addExpr)
+
+    mulop  go to state 87
 
 
 State 60
 
-   39 var: ID LSQ_BRKT • addExpr RSQ_BRKT
+   62 term: factor •
 
-    ID         shift, and go to state 37
-    INTCONST   shift, and go to state 38
-    CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
-
-    var           go to state 64
-    funcCallExpr  go to state 54
-    addExpr       go to state 86
-    term          go to state 57
-    factor        go to state 58
+    $default  reduce using rule 62 (term)
 
 
 State 61
 
-   32 condStmt: KWD_IF LPAREN • expr RPAREN stmt
-   33         | KWD_IF LPAREN • expr RPAREN stmt KWD_ELSE stmt
+   46 funcCallExpr: ID LPAREN • $@3 argList $@4 RPAREN
 
-    ID         shift, and go to state 37
-    INTCONST   shift, and go to state 38
-    CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
+    $default  reduce using rule 44 ($@3)
 
-    var           go to state 64
-    funcCallExpr  go to state 54
-    expr          go to state 87
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    $@3  go to state 88
 
 
 State 62
 
-   34 loopStmt: KWD_WHILE LPAREN • expr RPAREN stmt
+   43 var: ID LSQ_BRKT • addExpr RSQ_BRKT
 
     ID         shift, and go to state 37
     INTCONST   shift, and go to state 38
     CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
+    LPAREN     shift, and go to state 44
 
-    var           go to state 64
-    funcCallExpr  go to state 54
-    expr          go to state 88
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    var           go to state 66
+    funcCallExpr  go to state 56
+    addExpr       go to state 89
+    term          go to state 59
+    factor        go to state 60
 
 
 State 63
 
-   35 returnStmt: KWD_RETURN SEMICLN •
+   34 condStmt: KWD_IF LPAREN • expr RPAREN stmt
+   35         | KWD_IF LPAREN • expr RPAREN stmt KWD_ELSE stmt
 
-    $default  reduce using rule 35 (returnStmt)
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 90
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
 State 64
 
-   63 factor: var •
+   36 loopStmt: KWD_WHILE LPAREN • expr RPAREN stmt
 
-    $default  reduce using rule 63 (factor)
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 91
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
 State 65
 
-   36 returnStmt: KWD_RETURN expr • SEMICLN
+   37 returnStmt: KWD_RETURN SEMICLN •
 
-    SEMICLN  shift, and go to state 89
+    $default  reduce using rule 37 (returnStmt)
 
 
 State 66
 
-   62 factor: LPAREN expr • RPAREN
+   67 factor: var •
 
-    RPAREN  shift, and go to state 90
+    $default  reduce using rule 67 (factor)
 
 
 State 67
 
-   30 compoundStmt: LCRLY_BRKT localDeclList • stmtList RCRLY_BRKT
+   38 returnStmt: KWD_RETURN expr • SEMICLN
+
+    SEMICLN  shift, and go to state 92
+
+
+State 68
+
+   41 forStmt: KWD_FOR LPAREN • assignStmt expr SEMICLN assignNoSemi RPAREN stmt
+
+    ID  shift, and go to state 93
+
+    assignStmt  go to state 94
+    var         go to state 95
+
+
+State 69
+
+   66 factor: LPAREN expr • RPAREN
+
+    RPAREN  shift, and go to state 96
+
+
+State 70
+
+   32 compoundStmt: LCRLY_BRKT localDeclList • stmtList RCRLY_BRKT
 
     ID          shift, and go to state 37
     INTCONST    shift, and go to state 38
@@ -939,443 +1011,365 @@ State 67
     KWD_IF      shift, and go to state 40
     KWD_WHILE   shift, and go to state 41
     KWD_RETURN  shift, and go to state 42
-    LPAREN      shift, and go to state 43
-    LCRLY_BRKT  shift, and go to state 44
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
 
-    $default  reduce using rule 22 (stmtList)
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    RCRLY_BRKT  reduce using rule 22 (stmtList)
+    RCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 22 (stmtList)
 
-    stmtList      go to state 91
-    stmt          go to state 46
-    compoundStmt  go to state 47
-    assignStmt    go to state 48
-    condStmt      go to state 49
-    loopStmt      go to state 50
-    returnStmt    go to state 51
-    exprStmt      go to state 52
-    var           go to state 53
-    funcCallExpr  go to state 54
-    expr          go to state 55
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    stmtList      go to state 97
+    stmt          go to state 47
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
-State 68
+State 71
 
    19 funBody: LCRLY_BRKT localDeclList stmtList RCRLY_BRKT •
 
     $default  reduce using rule 19 (funBody)
 
 
-State 69
+State 72
 
    23 stmtList: stmt stmtList •
 
     $default  reduce using rule 23 (stmtList)
 
 
-State 70
+State 73
 
-   31 assignStmt: var OPER_ASGN • expr SEMICLN
+   33 assignStmt: var OPER_ASGN • expr SEMICLN
 
     ID         shift, and go to state 37
     INTCONST   shift, and go to state 38
     CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
+    LPAREN     shift, and go to state 44
 
-    var           go to state 64
-    funcCallExpr  go to state 54
-    expr          go to state 92
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
-
-
-State 71
-
-   37 exprStmt: expr SEMICLN •
-
-    $default  reduce using rule 37 (exprStmt)
-
-
-State 72
-
-   56 addop: OPER_ADD •
-
-    $default  reduce using rule 56 (addop)
-
-
-State 73
-
-   57 addop: OPER_SUB •
-
-    $default  reduce using rule 57 (addop)
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 98
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
 
 
 State 74
 
-   48 relop: OPER_LT •
+   39 exprStmt: expr SEMICLN •
 
-    $default  reduce using rule 48 (relop)
+    $default  reduce using rule 39 (exprStmt)
 
 
 State 75
 
-   49 relop: OPER_LTE •
+   60 addop: OPER_ADD •
 
-    $default  reduce using rule 49 (relop)
+    $default  reduce using rule 60 (addop)
 
 
 State 76
 
-   50 relop: OPER_GT •
+   61 addop: OPER_SUB •
 
-    $default  reduce using rule 50 (relop)
+    $default  reduce using rule 61 (addop)
 
 
 State 77
 
-   51 relop: OPER_GTE •
-
-    $default  reduce using rule 51 (relop)
-
-
-State 78
-
-   52 relop: OPER_EQ •
+   52 relop: OPER_LT •
 
     $default  reduce using rule 52 (relop)
 
 
-State 79
+State 78
 
-   53 relop: OPER_NEQ •
+   53 relop: OPER_LTE •
 
     $default  reduce using rule 53 (relop)
 
 
+State 79
+
+   54 relop: OPER_GT •
+
+    $default  reduce using rule 54 (relop)
+
+
 State 80
 
-   47 expr: addExpr relop • addExpr
+   55 relop: OPER_GTE •
 
-    ID         shift, and go to state 37
-    INTCONST   shift, and go to state 38
-    CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
-
-    var           go to state 64
-    funcCallExpr  go to state 54
-    addExpr       go to state 93
-    term          go to state 57
-    factor        go to state 58
+    $default  reduce using rule 55 (relop)
 
 
 State 81
 
-   55 addExpr: addExpr addop • term
+   56 relop: OPER_EQ •
 
-    ID         shift, and go to state 37
-    INTCONST   shift, and go to state 38
-    CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
-
-    var           go to state 64
-    funcCallExpr  go to state 54
-    term          go to state 94
-    factor        go to state 58
+    $default  reduce using rule 56 (relop)
 
 
 State 82
 
-   60 mulop: OPER_MUL •
+   57 relop: OPER_NEQ •
 
-    $default  reduce using rule 60 (mulop)
+    $default  reduce using rule 57 (relop)
 
 
 State 83
 
-   61 mulop: OPER_DIV •
+   51 expr: addExpr relop • addExpr
 
-    $default  reduce using rule 61 (mulop)
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    addExpr       go to state 99
+    term          go to state 59
+    factor        go to state 60
 
 
 State 84
 
-   59 term: term mulop • factor
+   59 addExpr: addExpr addop • term
 
     ID         shift, and go to state 37
     INTCONST   shift, and go to state 38
     CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
+    LPAREN     shift, and go to state 44
 
-    var           go to state 64
-    funcCallExpr  go to state 54
-    factor        go to state 95
+    var           go to state 66
+    funcCallExpr  go to state 56
+    term          go to state 100
+    factor        go to state 60
 
 
 State 85
 
-   42 funcCallExpr: ID LPAREN $@3 • argList $@4 RPAREN
+   64 mulop: OPER_MUL •
 
-    ID         shift, and go to state 37
-    INTCONST   shift, and go to state 38
-    CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
-
-    $default  reduce using rule 43 (argList)
-
-    var           go to state 64
-    funcCallExpr  go to state 54
-    argList       go to state 96
-    expr          go to state 97
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    $default  reduce using rule 64 (mulop)
 
 
 State 86
 
-   39 var: ID LSQ_BRKT addExpr • RSQ_BRKT
-   55 addExpr: addExpr • addop term
+   65 mulop: OPER_DIV •
 
-    RSQ_BRKT  shift, and go to state 98
-    OPER_ADD  shift, and go to state 72
-    OPER_SUB  shift, and go to state 73
-
-    addop  go to state 81
+    $default  reduce using rule 65 (mulop)
 
 
 State 87
 
-   32 condStmt: KWD_IF LPAREN expr • RPAREN stmt
-   33         | KWD_IF LPAREN expr • RPAREN stmt KWD_ELSE stmt
-
-    RPAREN  shift, and go to state 99
-
-
-State 88
-
-   34 loopStmt: KWD_WHILE LPAREN expr • RPAREN stmt
-
-    RPAREN  shift, and go to state 100
-
-
-State 89
-
-   36 returnStmt: KWD_RETURN expr SEMICLN •
-
-    $default  reduce using rule 36 (returnStmt)
-
-
-State 90
-
-   62 factor: LPAREN expr RPAREN •
-
-    $default  reduce using rule 62 (factor)
-
-
-State 91
-
-   30 compoundStmt: LCRLY_BRKT localDeclList stmtList • RCRLY_BRKT
-
-    RCRLY_BRKT  shift, and go to state 101
-
-
-State 92
-
-   31 assignStmt: var OPER_ASGN expr • SEMICLN
-
-    SEMICLN  shift, and go to state 102
-
-
-State 93
-
-   47 expr: addExpr relop addExpr •
-   55 addExpr: addExpr • addop term
-
-    OPER_ADD  shift, and go to state 72
-    OPER_SUB  shift, and go to state 73
-
-    $default  reduce using rule 47 (expr)
-
-    addop  go to state 81
-
-
-State 94
-
-   55 addExpr: addExpr addop term •
-   59 term: term • mulop factor
-
-    OPER_MUL  shift, and go to state 82
-    OPER_DIV  shift, and go to state 83
-
-    $default  reduce using rule 55 (addExpr)
-
-    mulop  go to state 84
-
-
-State 95
-
-   59 term: term mulop factor •
-
-    $default  reduce using rule 59 (term)
-
-
-State 96
-
-   42 funcCallExpr: ID LPAREN $@3 argList • $@4 RPAREN
-   45 argList: argList • COMMA expr
-
-    COMMA  shift, and go to state 103
-
-    $default  reduce using rule 41 ($@4)
-
-    $@4  go to state 104
-
-
-State 97
-
-   44 argList: expr •
-
-    $default  reduce using rule 44 (argList)
-
-
-State 98
-
-   39 var: ID LSQ_BRKT addExpr RSQ_BRKT •
-
-    $default  reduce using rule 39 (var)
-
-
-State 99
-
-   32 condStmt: KWD_IF LPAREN expr RPAREN • stmt
-   33         | KWD_IF LPAREN expr RPAREN • stmt KWD_ELSE stmt
-
-    ID          shift, and go to state 37
-    INTCONST    shift, and go to state 38
-    CHARCONST   shift, and go to state 39
-    KWD_IF      shift, and go to state 40
-    KWD_WHILE   shift, and go to state 41
-    KWD_RETURN  shift, and go to state 42
-    LPAREN      shift, and go to state 43
-    LCRLY_BRKT  shift, and go to state 44
-
-    stmt          go to state 105
-    compoundStmt  go to state 47
-    assignStmt    go to state 48
-    condStmt      go to state 49
-    loopStmt      go to state 50
-    returnStmt    go to state 51
-    exprStmt      go to state 52
-    var           go to state 53
-    funcCallExpr  go to state 54
-    expr          go to state 55
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
-
-
-State 100
-
-   34 loopStmt: KWD_WHILE LPAREN expr RPAREN • stmt
-
-    ID          shift, and go to state 37
-    INTCONST    shift, and go to state 38
-    CHARCONST   shift, and go to state 39
-    KWD_IF      shift, and go to state 40
-    KWD_WHILE   shift, and go to state 41
-    KWD_RETURN  shift, and go to state 42
-    LPAREN      shift, and go to state 43
-    LCRLY_BRKT  shift, and go to state 44
-
-    stmt          go to state 106
-    compoundStmt  go to state 47
-    assignStmt    go to state 48
-    condStmt      go to state 49
-    loopStmt      go to state 50
-    returnStmt    go to state 51
-    exprStmt      go to state 52
-    var           go to state 53
-    funcCallExpr  go to state 54
-    expr          go to state 55
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
-
-
-State 101
-
-   30 compoundStmt: LCRLY_BRKT localDeclList stmtList RCRLY_BRKT •
-
-    $default  reduce using rule 30 (compoundStmt)
-
-
-State 102
-
-   31 assignStmt: var OPER_ASGN expr SEMICLN •
-
-    $default  reduce using rule 31 (assignStmt)
-
-
-State 103
-
-   45 argList: argList COMMA • expr
+   63 term: term mulop • factor
 
     ID         shift, and go to state 37
     INTCONST   shift, and go to state 38
     CHARCONST  shift, and go to state 39
-    LPAREN     shift, and go to state 43
+    LPAREN     shift, and go to state 44
 
-    var           go to state 64
-    funcCallExpr  go to state 54
+    var           go to state 66
+    funcCallExpr  go to state 56
+    factor        go to state 101
+
+
+State 88
+
+   46 funcCallExpr: ID LPAREN $@3 • argList $@4 RPAREN
+
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    $default  reduce using rule 47 (argList)
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    argList       go to state 102
+    expr          go to state 103
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 89
+
+   43 var: ID LSQ_BRKT addExpr • RSQ_BRKT
+   59 addExpr: addExpr • addop term
+
+    RSQ_BRKT  shift, and go to state 104
+    OPER_ADD  shift, and go to state 75
+    OPER_SUB  shift, and go to state 76
+
+    addop  go to state 84
+
+
+State 90
+
+   34 condStmt: KWD_IF LPAREN expr • RPAREN stmt
+   35         | KWD_IF LPAREN expr • RPAREN stmt KWD_ELSE stmt
+
+    RPAREN  shift, and go to state 105
+
+
+State 91
+
+   36 loopStmt: KWD_WHILE LPAREN expr • RPAREN stmt
+
+    RPAREN  shift, and go to state 106
+
+
+State 92
+
+   38 returnStmt: KWD_RETURN expr SEMICLN •
+
+    $default  reduce using rule 38 (returnStmt)
+
+
+State 93
+
+   42 var: ID •
+   43    | ID • LSQ_BRKT addExpr RSQ_BRKT
+
+    LSQ_BRKT  shift, and go to state 62
+
+    $default  reduce using rule 42 (var)
+
+
+State 94
+
+   41 forStmt: KWD_FOR LPAREN assignStmt • expr SEMICLN assignNoSemi RPAREN stmt
+
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
     expr          go to state 107
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 95
+
+   33 assignStmt: var • OPER_ASGN expr SEMICLN
+
+    OPER_ASGN  shift, and go to state 73
+
+
+State 96
+
+   66 factor: LPAREN expr RPAREN •
+
+    $default  reduce using rule 66 (factor)
+
+
+State 97
+
+   32 compoundStmt: LCRLY_BRKT localDeclList stmtList • RCRLY_BRKT
+
+    RCRLY_BRKT  shift, and go to state 108
+
+
+State 98
+
+   33 assignStmt: var OPER_ASGN expr • SEMICLN
+
+    SEMICLN  shift, and go to state 109
+
+
+State 99
+
+   51 expr: addExpr relop addExpr •
+   59 addExpr: addExpr • addop term
+
+    OPER_ADD  shift, and go to state 75
+    OPER_SUB  shift, and go to state 76
+
+    $default  reduce using rule 51 (expr)
+
+    addop  go to state 84
+
+
+State 100
+
+   59 addExpr: addExpr addop term •
+   63 term: term • mulop factor
+
+    OPER_MUL  shift, and go to state 85
+    OPER_DIV  shift, and go to state 86
+
+    $default  reduce using rule 59 (addExpr)
+
+    mulop  go to state 87
+
+
+State 101
+
+   63 term: term mulop factor •
+
+    $default  reduce using rule 63 (term)
+
+
+State 102
+
+   46 funcCallExpr: ID LPAREN $@3 argList • $@4 RPAREN
+   49 argList: argList • COMMA expr
+
+    COMMA  shift, and go to state 110
+
+    $default  reduce using rule 45 ($@4)
+
+    $@4  go to state 111
+
+
+State 103
+
+   48 argList: expr •
+
+    $default  reduce using rule 48 (argList)
 
 
 State 104
 
-   42 funcCallExpr: ID LPAREN $@3 argList $@4 • RPAREN
+   43 var: ID LSQ_BRKT addExpr RSQ_BRKT •
 
-    RPAREN  shift, and go to state 108
+    $default  reduce using rule 43 (var)
 
 
 State 105
 
-   32 condStmt: KWD_IF LPAREN expr RPAREN stmt •
-   33         | KWD_IF LPAREN expr RPAREN stmt • KWD_ELSE stmt
-
-    KWD_ELSE  shift, and go to state 109
-
-    $default  reduce using rule 32 (condStmt)
-
-
-State 106
-
-   34 loopStmt: KWD_WHILE LPAREN expr RPAREN stmt •
-
-    $default  reduce using rule 34 (loopStmt)
-
-
-State 107
-
-   45 argList: argList COMMA expr •
-
-    $default  reduce using rule 45 (argList)
-
-
-State 108
-
-   42 funcCallExpr: ID LPAREN $@3 argList $@4 RPAREN •
-
-    $default  reduce using rule 42 (funcCallExpr)
-
-
-State 109
-
-   33 condStmt: KWD_IF LPAREN expr RPAREN stmt KWD_ELSE • stmt
+   34 condStmt: KWD_IF LPAREN expr RPAREN • stmt
+   35         | KWD_IF LPAREN expr RPAREN • stmt KWD_ELSE stmt
 
     ID          shift, and go to state 37
     INTCONST    shift, and go to state 38
@@ -1383,26 +1377,293 @@ State 109
     KWD_IF      shift, and go to state 40
     KWD_WHILE   shift, and go to state 41
     KWD_RETURN  shift, and go to state 42
-    LPAREN      shift, and go to state 43
-    LCRLY_BRKT  shift, and go to state 44
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
 
-    stmt          go to state 110
-    compoundStmt  go to state 47
-    assignStmt    go to state 48
-    condStmt      go to state 49
-    loopStmt      go to state 50
-    returnStmt    go to state 51
-    exprStmt      go to state 52
-    var           go to state 53
-    funcCallExpr  go to state 54
-    expr          go to state 55
-    addExpr       go to state 56
-    term          go to state 57
-    factor        go to state 58
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 31 (stmt)
+
+    stmt          go to state 112
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 106
+
+   36 loopStmt: KWD_WHILE LPAREN expr RPAREN • stmt
+
+    ID          shift, and go to state 37
+    INTCONST    shift, and go to state 38
+    CHARCONST   shift, and go to state 39
+    KWD_IF      shift, and go to state 40
+    KWD_WHILE   shift, and go to state 41
+    KWD_RETURN  shift, and go to state 42
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
+
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 31 (stmt)
+
+    stmt          go to state 113
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 107
+
+   41 forStmt: KWD_FOR LPAREN assignStmt expr • SEMICLN assignNoSemi RPAREN stmt
+
+    SEMICLN  shift, and go to state 114
+
+
+State 108
+
+   32 compoundStmt: LCRLY_BRKT localDeclList stmtList RCRLY_BRKT •
+
+    $default  reduce using rule 32 (compoundStmt)
+
+
+State 109
+
+   33 assignStmt: var OPER_ASGN expr SEMICLN •
+
+    $default  reduce using rule 33 (assignStmt)
 
 
 State 110
 
-   33 condStmt: KWD_IF LPAREN expr RPAREN stmt KWD_ELSE stmt •
+   49 argList: argList COMMA • expr
 
-    $default  reduce using rule 33 (condStmt)
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 115
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 111
+
+   46 funcCallExpr: ID LPAREN $@3 argList $@4 • RPAREN
+
+    RPAREN  shift, and go to state 116
+
+
+State 112
+
+   34 condStmt: KWD_IF LPAREN expr RPAREN stmt •
+   35         | KWD_IF LPAREN expr RPAREN stmt • KWD_ELSE stmt
+
+    KWD_ELSE  shift, and go to state 117
+
+    $default  reduce using rule 34 (condStmt)
+
+
+State 113
+
+   36 loopStmt: KWD_WHILE LPAREN expr RPAREN stmt •
+
+    $default  reduce using rule 36 (loopStmt)
+
+
+State 114
+
+   41 forStmt: KWD_FOR LPAREN assignStmt expr SEMICLN • assignNoSemi RPAREN stmt
+
+    ID  shift, and go to state 93
+
+    assignNoSemi  go to state 118
+    var           go to state 119
+
+
+State 115
+
+   49 argList: argList COMMA expr •
+
+    $default  reduce using rule 49 (argList)
+
+
+State 116
+
+   46 funcCallExpr: ID LPAREN $@3 argList $@4 RPAREN •
+
+    $default  reduce using rule 46 (funcCallExpr)
+
+
+State 117
+
+   35 condStmt: KWD_IF LPAREN expr RPAREN stmt KWD_ELSE • stmt
+
+    ID          shift, and go to state 37
+    INTCONST    shift, and go to state 38
+    CHARCONST   shift, and go to state 39
+    KWD_IF      shift, and go to state 40
+    KWD_WHILE   shift, and go to state 41
+    KWD_RETURN  shift, and go to state 42
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
+
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 31 (stmt)
+
+    stmt          go to state 120
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 118
+
+   41 forStmt: KWD_FOR LPAREN assignStmt expr SEMICLN assignNoSemi • RPAREN stmt
+
+    RPAREN  shift, and go to state 121
+
+
+State 119
+
+   40 assignNoSemi: var • OPER_ASGN expr
+
+    OPER_ASGN  shift, and go to state 122
+
+
+State 120
+
+   35 condStmt: KWD_IF LPAREN expr RPAREN stmt KWD_ELSE stmt •
+
+    $default  reduce using rule 35 (condStmt)
+
+
+State 121
+
+   41 forStmt: KWD_FOR LPAREN assignStmt expr SEMICLN assignNoSemi RPAREN • stmt
+
+    ID          shift, and go to state 37
+    INTCONST    shift, and go to state 38
+    CHARCONST   shift, and go to state 39
+    KWD_IF      shift, and go to state 40
+    KWD_WHILE   shift, and go to state 41
+    KWD_RETURN  shift, and go to state 42
+    KWD_FOR     shift, and go to state 43
+    LPAREN      shift, and go to state 44
+    LCRLY_BRKT  shift, and go to state 45
+
+    ID          [reduce using rule 31 (stmt)]
+    INTCONST    [reduce using rule 31 (stmt)]
+    CHARCONST   [reduce using rule 31 (stmt)]
+    KWD_IF      [reduce using rule 31 (stmt)]
+    KWD_WHILE   [reduce using rule 31 (stmt)]
+    KWD_RETURN  [reduce using rule 31 (stmt)]
+    KWD_FOR     [reduce using rule 31 (stmt)]
+    LPAREN      [reduce using rule 31 (stmt)]
+    LCRLY_BRKT  [reduce using rule 31 (stmt)]
+    $default    reduce using rule 31 (stmt)
+
+    stmt          go to state 123
+    compoundStmt  go to state 48
+    assignStmt    go to state 49
+    condStmt      go to state 50
+    loopStmt      go to state 51
+    returnStmt    go to state 52
+    exprStmt      go to state 53
+    forStmt       go to state 54
+    var           go to state 55
+    funcCallExpr  go to state 56
+    expr          go to state 57
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 122
+
+   40 assignNoSemi: var OPER_ASGN • expr
+
+    ID         shift, and go to state 37
+    INTCONST   shift, and go to state 38
+    CHARCONST  shift, and go to state 39
+    LPAREN     shift, and go to state 44
+
+    var           go to state 66
+    funcCallExpr  go to state 56
+    expr          go to state 124
+    addExpr       go to state 58
+    term          go to state 59
+    factor        go to state 60
+
+
+State 123
+
+   41 forStmt: KWD_FOR LPAREN assignStmt expr SEMICLN assignNoSemi RPAREN stmt •
+
+    $default  reduce using rule 41 (forStmt)
+
+
+State 124
+
+   40 assignNoSemi: var OPER_ASGN expr •
+
+    $default  reduce using rule 40 (assignNoSemi)

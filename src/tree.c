@@ -7,13 +7,13 @@
 tree *ast = NULL;
 
 /* string values for ast node types, makes tree output more readable */
-char *nodeNames[33] = {"program", "declList", "decl", "varDecl", "typeSpecifier",
+char *nodeNames[34] = {"program", "declList", "decl", "varDecl", "typeSpecifier",
                        "funDecl", "formalDeclList", "formalDecl", "funBody",
                        "localDeclList", "statementList", "statement", "compoundStmt",
                        "assignStmt", "condStmt", "loopStmt", "returnStmt","expression",
                        "relop", "addExpr", "addop", "term", "mulop", "factor",
                        "funcCallExpr", "argList", "integer", "identifier", "var",
-                       "arrayDecl", "char", "funcTypeName"};
+                       "arrayDecl", "char", "funcTypeName", "forStmt"};
 
 char *typeNames[3] = {"int", "char", "void"};
 char *ops[10] = {"+", "-", "*", "/", "<", "<=", "==", ">=", ">", "!="};

@@ -64,28 +64,29 @@ extern int yydebug;
     KWD_ELSE = 265,                /* KWD_ELSE  */
     KWD_WHILE = 266,               /* KWD_WHILE  */
     KWD_RETURN = 267,              /* KWD_RETURN  */
-    LPAREN = 268,                  /* LPAREN  */
-    RPAREN = 269,                  /* RPAREN  */
-    LCRLY_BRKT = 270,              /* LCRLY_BRKT  */
-    RCRLY_BRKT = 271,              /* RCRLY_BRKT  */
-    LSQ_BRKT = 272,                /* LSQ_BRKT  */
-    RSQ_BRKT = 273,                /* RSQ_BRKT  */
-    SEMICLN = 274,                 /* SEMICLN  */
-    COMMA = 275,                   /* COMMA  */
-    OPER_ASGN = 276,               /* OPER_ASGN  */
-    OPER_ADD = 277,                /* OPER_ADD  */
-    OPER_SUB = 278,                /* OPER_SUB  */
-    OPER_MUL = 279,                /* OPER_MUL  */
-    OPER_DIV = 280,                /* OPER_DIV  */
-    OPER_LT = 281,                 /* OPER_LT  */
-    OPER_LTE = 282,                /* OPER_LTE  */
-    OPER_GT = 283,                 /* OPER_GT  */
-    OPER_GTE = 284,                /* OPER_GTE  */
-    OPER_EQ = 285,                 /* OPER_EQ  */
-    OPER_NEQ = 286,                /* OPER_NEQ  */
-    ERROR = 287,                   /* ERROR  */
-    ILLEGAL_TOK = 288,             /* ILLEGAL_TOK  */
-    LOWER_THAN_ELSE = 289          /* LOWER_THAN_ELSE  */
+    KWD_FOR = 268,                 /* KWD_FOR  */
+    LPAREN = 269,                  /* LPAREN  */
+    RPAREN = 270,                  /* RPAREN  */
+    LCRLY_BRKT = 271,              /* LCRLY_BRKT  */
+    RCRLY_BRKT = 272,              /* RCRLY_BRKT  */
+    LSQ_BRKT = 273,                /* LSQ_BRKT  */
+    RSQ_BRKT = 274,                /* RSQ_BRKT  */
+    SEMICLN = 275,                 /* SEMICLN  */
+    COMMA = 276,                   /* COMMA  */
+    OPER_ASGN = 277,               /* OPER_ASGN  */
+    OPER_ADD = 278,                /* OPER_ADD  */
+    OPER_SUB = 279,                /* OPER_SUB  */
+    OPER_MUL = 280,                /* OPER_MUL  */
+    OPER_DIV = 281,                /* OPER_DIV  */
+    OPER_LT = 282,                 /* OPER_LT  */
+    OPER_LTE = 283,                /* OPER_LTE  */
+    OPER_GT = 284,                 /* OPER_GT  */
+    OPER_GTE = 285,                /* OPER_GTE  */
+    OPER_EQ = 286,                 /* OPER_EQ  */
+    OPER_NEQ = 287,                /* OPER_NEQ  */
+    ERROR = 288,                   /* ERROR  */
+    ILLEGAL_TOK = 289,             /* ILLEGAL_TOK  */
+    LOWER_THAN_ELSE = 290          /* LOWER_THAN_ELSE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -104,40 +105,41 @@ extern int yydebug;
 #define KWD_ELSE 265
 #define KWD_WHILE 266
 #define KWD_RETURN 267
-#define LPAREN 268
-#define RPAREN 269
-#define LCRLY_BRKT 270
-#define RCRLY_BRKT 271
-#define LSQ_BRKT 272
-#define RSQ_BRKT 273
-#define SEMICLN 274
-#define COMMA 275
-#define OPER_ASGN 276
-#define OPER_ADD 277
-#define OPER_SUB 278
-#define OPER_MUL 279
-#define OPER_DIV 280
-#define OPER_LT 281
-#define OPER_LTE 282
-#define OPER_GT 283
-#define OPER_GTE 284
-#define OPER_EQ 285
-#define OPER_NEQ 286
-#define ERROR 287
-#define ILLEGAL_TOK 288
-#define LOWER_THAN_ELSE 289
+#define KWD_FOR 268
+#define LPAREN 269
+#define RPAREN 270
+#define LCRLY_BRKT 271
+#define RCRLY_BRKT 272
+#define LSQ_BRKT 273
+#define RSQ_BRKT 274
+#define SEMICLN 275
+#define COMMA 276
+#define OPER_ASGN 277
+#define OPER_ADD 278
+#define OPER_SUB 279
+#define OPER_MUL 280
+#define OPER_DIV 281
+#define OPER_LT 282
+#define OPER_LTE 283
+#define OPER_GT 284
+#define OPER_GTE 285
+#define OPER_EQ 286
+#define OPER_NEQ 287
+#define ERROR 288
+#define ILLEGAL_TOK 289
+#define LOWER_THAN_ELSE 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 123 "src/parser.y"
+#line 122 "src/parser.y"
 
     int value;
     struct treenode *node;
     char *strval;
 
-#line 141 "obj/y.tab.h"
+#line 143 "obj/y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

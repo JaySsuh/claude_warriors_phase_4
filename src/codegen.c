@@ -242,6 +242,34 @@ static void genStmt(tree *node, FILE *out) {
             fprintf(out, "  jr $ra\n");
             break;
 
+        case FORSTMT:{
+            int lblStart = newLabel();
+            int lblEnd = newLabel();
+
+            tree *init = getChild(node, 0);
+            tree *cond = getChild(node, 1);
+            tree *update = getChild(node, 2);
+            tree *body = getChild(node, 3);
+
+            if (!init || !cond || !update || !body) {
+                fprintf(out, "  # ERROR: malformed for loop\n");
+                break;
+            }
+
+            genStmt(init, out);
+
+            fprintf(out, "L%d:\n", lblStart);
+            genExpr(cond, out, "$t0");
+            fprintf(out, "     beq $t0, $zero, L%d\n", lblEnd);
+
+            genStmt(body, out);
+            genStmt(update, out);
+
+            fprintf(out, "     j L%d\n", lblStart);
+            fprintf(out, "L%d:\n", lblEnd);
+            break;
+        }
+
         default:
             fprintf(out, "  # Unhandled statement node kind: %d\n", node->nodeKind);
             break;

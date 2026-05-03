@@ -42,6 +42,7 @@ yylineno = 1;
 "char"          {updateCol(); return KWD_CHAR;}
 "return"        {updateCol(); return KWD_RETURN;}
 "void"          {updateCol(); return KWD_VOID;}
+"for"           {updateCol(); return KWD_FOR;}
 
  /* Operators */;
 \+              {updateCol(); return OPER_ADD;}

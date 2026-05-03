@@ -2,10 +2,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#define NODE_TYPES_DEFINED
 #include<../src/tree.h>
 #include<../src/strtab.h>
-
-#define NODE_TYPES_DEFINED
 
 extern int yylineno;
 extern int yylex(void);
@@ -130,7 +129,7 @@ int expr_type(tree *node) {
 %token <strval> ID
 %token <value> INTCONST
 %token <value> CHARCONST
-%token KWD_INT KWD_CHAR KWD_VOID KWD_IF KWD_ELSE KWD_WHILE KWD_RETURN
+%token KWD_INT KWD_CHAR KWD_VOID KWD_IF KWD_ELSE KWD_WHILE KWD_RETURN KWD_FOR
 %token LPAREN RPAREN LCRLY_BRKT RCRLY_BRKT LSQ_BRKT RSQ_BRKT
 %token SEMICLN COMMA
 %token OPER_ASGN
@@ -147,6 +146,8 @@ int expr_type(tree *node) {
 %type <node> compoundStmt assignStmt condStmt loopStmt returnStmt
 %type <node> expr relop addExpr addop term mulop factor
 %type <node> funcCallExpr argList var
+%type <node> forStmt assignNoSemi
+
  /*precendence for dangling else and operators*/
 %nonassoc LOWER_THAN_ELSE
 %nonassoc KWD_ELSE
@@ -432,6 +433,14 @@ stmt                : compoundStmt
                       {
                         $$ = $1;
                       }
+                    | forStmt
+                      {
+                        $$ = $1;
+                      }
+                    |
+                      {
+                        $$ = maketree(STATEMENT);
+                      }
                     ;
 
 compoundStmt        : LCRLY_BRKT localDeclList stmtList RCRLY_BRKT
@@ -526,6 +535,27 @@ exprStmt            : expr SEMICLN
                         $$ = n;
                       }
                     ;
+
+
+assignNoSemi        : var OPER_ASGN expr
+                {
+                  tree *n = maketree(ASSIGNSTMT);
+                  addChild(n, $1);
+                  addChild(n, $3);
+                  $$ = n;
+                }
+              ;
+                
+forStmt             : KWD_FOR LPAREN assignStmt expr SEMICLN assignNoSemi RPAREN stmt
+                  {
+                    tree *n = maketree(FORSTMT);
+                    addChild(n, $3);
+                    addChild(n, $4);
+                    addChild(n, $6);
+                    addChild(n, $8);
+                    $$ = n;
+                  }
+                ;
 
 // variables, function calls, arguments
 var                 : ID
