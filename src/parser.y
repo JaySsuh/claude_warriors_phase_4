@@ -544,6 +544,7 @@ var                 : ID
                         }
 
                         addChild(v, id);
+                        v->scope = (current_scope->parent != NULL) ? SCOPE_LOCAL : SCOPE_GLOBAL;
                         $$ = v;
                       }
                     | ID LSQ_BRKT addExpr RSQ_BRKT
@@ -608,6 +609,7 @@ var                 : ID
 
                         addChild(v, id);
                         addChild(v, $3);
+                        v->scope = (current_scope->parent != NULL) ? SCOPE_LOCAL : SCOPE_GLOBAL;
                         $$ = v;
                       }
                     ;

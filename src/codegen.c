@@ -154,6 +154,11 @@ static void genStmt(tree *node, FILE *out) {
         node = getChild(node, 0);
     }
 
+    if (node->nodeKind == STATEMENTLIST) {
+        genStmtList(node, out);
+        return;
+    }
+
     switch (node->nodeKind) {
         case ASSIGNSTMT: {
             tree *lhs = getChild(node, 0);
@@ -289,7 +294,11 @@ static void genExpr(tree *node, FILE *out, const char *targetReg) {
                 tree *right = getChild(node, 2);
 
                 genExpr(left, out, targetReg);
+                fprintf(out, "  addi $sp, $sp, -4\n");
+                fprintf(out, "  sw %s, 0($sp)\n", targetReg);
                 genExpr(right, out, "$t1");
+                fprintf(out, "  lw %s, 0($sp)\n", targetReg);
+                fprintf(out, "  addi $sp, $sp, 4\n");
 
                 switch (op->val) {
                     case 0: // OPADD or OP_ADD
@@ -323,7 +332,11 @@ static void genExpr(tree *node, FILE *out, const char *targetReg) {
                 tree *right = getChild(node, 2);
 
                 genExpr(left, out, targetReg);
+                fprintf(out, "  addi $sp, $sp, -4\n");
+                fprintf(out, "  sw %s, 0($sp)\n", targetReg);
                 genExpr(right, out, "$t1");
+                fprintf(out, "  lw %s, 0($sp)\n", targetReg);
+                fprintf(out, "  addi $sp, $sp, 4\n");
 
                 switch (op->val) {
                     case 4: // OPLT or OP_LT
