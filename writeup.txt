@@ -1,0 +1,17 @@
+1. Name and Course ID
+----------------------
+Jay Suh
+Joel Sarmiento
+CS 4318
+
+2. Group Members and Contributions
+-----------------------------------
+Jay Suh
+    -
+
+Joel Sarmiento
+    -bug fixes
+    -testing on zeus
+
+3. Extra Grading Instructions
+------------------------------
