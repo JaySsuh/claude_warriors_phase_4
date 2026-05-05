@@ -8,19 +8,19 @@ main:
   li $t0, 2
   addi $sp, $sp, -4
   sw $t0, 0($sp)
-  li $t1, 3
+  li $t0, 3
   addi $sp, $sp, -4
-  sw $t1, 0($sp)
+  sw $t0, 0($sp)
   li $t1, 5
-  lw $t1, 0($sp)
+  lw $t0, 0($sp)
   addi $sp, $sp, 4
-  mul $t1, $t1, $t1
+  mul $t0, $t0, $t1
   addi $sp, $sp, -4
-  sw $t1, 0($sp)
+  sw $t0, 0($sp)
   li $t1, 7
-  lw $t1, 0($sp)
+  lw $t0, 0($sp)
   addi $sp, $sp, 4
-  div $t1, $t1
+  div $t0, $t1
   mflo $t1
   lw $t0, 0($sp)
   addi $sp, $sp, 4
