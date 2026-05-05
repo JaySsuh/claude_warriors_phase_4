@@ -321,28 +321,28 @@ static void genExpr(tree *node, FILE *out, const char *targetReg) {
                 tree *op = getChild(node, 1);
                 tree *right = getChild(node, 2);
 
-                genExpr(left, out, targetReg);
+                genExpr(left, out, "$t0");
                 fprintf(out, "  addi $sp, $sp, -4\n");
-                fprintf(out, "  sw %s, 0($sp)\n", targetReg);
+                fprintf(out, "  sw $t0, 0($sp)\n");
                 genExpr(right, out, "$t1");
-                fprintf(out, "  lw %s, 0($sp)\n", targetReg);
+                fprintf(out, "  lw $t0, 0($sp)\n");
                 fprintf(out, "  addi $sp, $sp, 4\n");
 
                 switch (op->val) {
                     case 0: // OPADD or OP_ADD
-                        fprintf(out, "  add %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  add %s, $t0, $t1\n", targetReg);
                         break;
                     
                     case 1: // OPSUB or OP_SUB
-                        fprintf(out, "  sub %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  sub %s, $t0, $t1\n", targetReg);
                         break;
                     
                     case 2: // OPMUL or OP_MUL
-                        fprintf(out, "  mul %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  mul %s, $t0, $t1\n", targetReg);
                         break;
                     
                     case 3: // OPDIV or OP_DIV
-                        fprintf(out, "  div %s, $t1\n", targetReg);
+                        fprintf(out, "  div $t0, $t1\n");
                         fprintf(out, "  mflo %s\n", targetReg);
                         break;
                     
@@ -359,36 +359,36 @@ static void genExpr(tree *node, FILE *out, const char *targetReg) {
                 tree *op = getChild(node, 1);
                 tree *right = getChild(node, 2);
 
-                genExpr(left, out, targetReg);
+                genExpr(left, out, "$t0");
                 fprintf(out, "  addi $sp, $sp, -4\n");
-                fprintf(out, "  sw %s, 0($sp)\n", targetReg);
+                fprintf(out, "  sw $t0, 0($sp)\n");
                 genExpr(right, out, "$t1");
-                fprintf(out, "  lw %s, 0($sp)\n", targetReg);
+                fprintf(out, "  lw $t0, 0($sp)\n");
                 fprintf(out, "  addi $sp, $sp, 4\n");
 
                 switch (op->val) {
                     case 4: // OPLT or OP_LT
-                        fprintf(out, "  slt %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  slt %s, $t0, $t1\n", targetReg);
                         break;
                     
                     case 5: // OPLTE or OP_LTE
-                        fprintf(out, "  sle %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  sle %s, $t0, $t1\n", targetReg);
                         break;
 
                     case 6: // OPEQ or OP_EQ
-                        fprintf(out, "  seq %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  seq %s, $t0, $t1\n", targetReg);
                         break;
 
                     case 7: // OPGTE or OP_GTE
-                        fprintf(out, "  sge %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  sge %s, $t0, $t1\n", targetReg);
                         break;
                     
                     case 8: // OPGT or OP_GT
-                        fprintf(out, "  sgt %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  sgt %s, $t0, $t1\n", targetReg);
                         break;
 
                     case 9: // OPNEQ or OP_NEQ
-                        fprintf(out, "  sne %s, %s, $t1\n", targetReg, targetReg);
+                        fprintf(out, "  sne %s, $t0, $t1\n", targetReg);
                         break;
 
                     default:
