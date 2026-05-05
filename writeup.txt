@@ -7,7 +7,9 @@ CS 4318
 2. Group Members and Contributions
 -----------------------------------
 Jay Suh
-    -
+    - refactoring parser, tree.h, and strtab.h files to better fit with the project specifications
+    - creating codegen.c file
+    - bug fixes to get tests to work
 
 Joel Sarmiento
     -bug fixes
